@@ -14,7 +14,7 @@ import os
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Needed for session management
+app.secret_key = '1998f4d5ac07df2aa1a2a5f22d2b9f87'  # Needed for session management
 
 # Set up logging and ignore warnings
 warnings.filterwarnings("ignore")
