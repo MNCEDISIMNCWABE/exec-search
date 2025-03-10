@@ -6,15 +6,28 @@
     <title>Dashboard</title>
 </head>
 <body>
-    <h1>Welcome, {{ username }}!</h1>
-    <p>Role: {{ user_role }}</p>
+    <h1>Dashboard</h1>
+    <p>Welcome, {{ username }}! (Role: {{ user_role }})</p>
     <a href="/logout">Logout</a>
-    <h2>Navigation</h2>
-    <ul>
-        <li><a href="/search">Search Candidates</a></li>
-        {% if user_role == 'admin' %}
-            <li><a href="/admin">Admin Dashboard</a></li>
-        {% endif %}
-    </ul>
+    <h2>Search for Candidates</h2>
+    <form action="/search" method="post">
+        <label for="query">Job Title/Position:</label>
+        <input type="text" id="query" name="query" required><br><br>
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country"><br><br>
+        <label for="location">City/Location:</label>
+        <input type="text" id="location" name="location"><br><br>
+        <label for="max_results">Maximum number of results:</label>
+        <input type="number" id="max_results" name="max_results" value="15" min="5" max="50"><br><br>
+        <button type="submit">Search Candidates</button>
+    </form>
+    <h2>Rank Candidates</h2>
+    <form action="/rank" method="post">
+        <label for="job_description">Job Description:</label><br>
+        <textarea id="job_description" name="job_description" rows="10" cols="50" required></textarea><br><br>
+        <button type="submit">Rank Candidates</button>
+    </form>
+    <h2>Ranked Results</h2>
+    <a href="/download">Download Ranked Candidates (Excel)</a>
 </body>
 </html>
