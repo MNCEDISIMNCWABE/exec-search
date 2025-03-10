@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranked Candidates</title>
+</head>
+<body>
+    <h1>Ranked Candidates</h1>
+    <a href="/download">Download Ranked Candidates (Excel)</a>
+    <h2>Match Results</h2>
+    {% if results %}
+        <ul>
+            {% for result in results %}
+                <li>
+                    <strong>Name:</strong> {{ result.Name }}<br>
+                    <strong>Headline/Title:</strong> {{ result.HeadlineTitle }}<br>
+                    <strong>Match Score:</strong> {{ result.match_percentage }}<br>
+                    <strong>Location:</strong> {{ result.Location }}<br>
+                    <strong>Country:</strong> {{ result.Country }}<br>
+                    <strong>Industry:</strong> {{ result.Industry }}<br>
+                    <strong>Profile URL:</strong> <a href="{{ result.URL }}" target="_blank">Link</a><br>
+                    <strong>Summary:</strong> {{ result.Summary }}<br>
+                    <strong>Experiences:</strong>
+                    <pre>{{ result.Experiences }}</pre>
+                    <strong>Educations:</strong>
+                    <pre>{{ result.Educations }}</pre>
+                    <strong>Skills:</strong> {{ result.Skills }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No ranked results available.</p>
+    {% endif %}
+</body>
+</html>
