@@ -3,4 +3,5 @@ pandas
 numpy
 sentence-transformers
 requests
+gunicorn
 xlsxwriter
