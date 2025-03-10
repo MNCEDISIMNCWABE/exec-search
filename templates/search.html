@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Candidates</title>
+</head>
+<body>
+    <h1>Search Candidates</h1>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    {% if warning %}
+        <p style="color: orange;">{{ warning }}</p>
+    {% endif %}
+    <form action="/search" method="post">
+        <label for="search_query">Job Title/Position:</label>
+        <input type="text" id="search_query" name="search_query" required><br>
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country"><br>
+        <label for="location">City/Location:</label>
+        <input type="text" id="location" name="location"><br>
+        <label for="max_results">Maximum number of results:</label>
+        <input type="number" id="max_results" name="max_results" min="5" max="50" value="15"><br>
+        <button type="submit">Search Candidates</button>
+    </form>
+    <h2>Search Results</h2>
+    {% if results %}
+        <ul>
+            {% for result in results %}
+                <li>
+                    <strong>Name:</strong> {{ result.Name }}<br>
+                    <strong>Headline/Title:</strong> {{ result.HeadlineTitle }}<br>
+                    <strong>Location:</strong> {{ result.Location }}<br>
+                    <strong>Country:</strong> {{ result.Country }}<br>
+                    <strong>Industry:</strong> {{ result.Industry }}<br>
+                    <strong>Profile URL:</strong> <a href="{{ result.URL }}" target="_blank">Link</a><br>
+                    <strong>Summary:</strong> {{ result.Summary }}<br>
+                    <strong>Experiences:</strong>
+                    <pre>{{ result.Experiences }}</pre>
+                    <strong>Educations:</strong>
+                    <pre>{{ result.Educations }}</pre>
+                    <strong>Skills:</strong> {{ result.Skills }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+    <h2>Rank Candidates</h2>
+    <form action="/rank" method="post">
+        <label for="job_description">Job Description:</label>
+        <textarea id="job_description" name="job_description" rows="10" cols="50" required></textarea><br>
+        <button type="submit">Rank Candidates</button>
+    </form>
+</body>
+</html>
