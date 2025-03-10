@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 import pandas as pd
 import numpy as np
 from sentence_transformers import SentenceTransformer, util
@@ -14,7 +14,7 @@ import os
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
-app.secret_key = '1998f4d5ac07df2aa1a2a5f22d2b9f87'  # Needed for session management
+app.secret_key = '1998f4d5ac07df2aa1a2a5f22d2b9f87'
 
 # Set up logging and ignore warnings
 warnings.filterwarnings("ignore")
@@ -350,7 +350,7 @@ def search():
     else:
         session['search_results'] = results.to_dict(orient='records')
         flash('Search successful!', 'success')
-    return redirect(url_for('dashboard'))
+    return jsonify({'redirect': url_for('dashboard')})
 
 @app.route('/rank', methods=['POST'])
 def rank():
@@ -365,14 +365,14 @@ def rank():
         else:
             session['ranked_results'] = ranked_df.to_dict(orient='records')
             flash('Candidates ranked successfully!', 'success')
-    return redirect(url_for('dashboard'))
+    return jsonify({'redirect': url_for('dashboard')})
 
 @app.route('/download')
 def download():
     if 'ranked_results' in session and session['ranked_results']:
         ranked_df = pd.DataFrame(session['ranked_results'])
         excel_data = to_excel(ranked_df)
-        return excel_data
+        return send_file(io.BytesIO(excel_data), mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', as_attachment=True, download_name='ranked_candidates.xlsx')
     else:
         flash('No ranked results available for download.', 'warning')
         return redirect(url_for('dashboard'))
